@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>User Side</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+          }
+          #location {
+            margin-top: 20px;
+          }
+        </style>
+      </head>
+
+
+
+
+<body>    
+    <h1>User Side</h1>
+    
+    <div id="location"></div>
+
+    <button type="submit" id="Button" onclick=" ">Retrieve Data</button>
+
+
+<script type="module">
+
+    import { initializeApp ,getApp} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+   
+   const firebaseConfig = {
+     apiKey: "AIzaSyAFeE7lHoEggkFZCpO7V4qKNPm4GJz_MdM",
+     authDomain: "shuttle-tracker-44d88.firebaseapp.com",
+     databaseURL: "https://shuttle-tracker-44d88-default-rtdb.firebaseio.com",
+     projectId: "shuttle-tracker-44d88",
+     storageBucket: "shuttle-tracker-44d88.appspot.com",
+     messagingSenderId: "340658590625",
+     appId: "1:340658590625:web:6eb4a81587a76c08d3f1e0"
+   };
+ 
+   const app = initializeApp(firebaseConfig);
+
+   import{getDatabase,ref,child,get,set,update,remove,onValue} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js"
+  
+   
+ 
+   const db=getDatabase()
+
+    function getData(){
+        const starCountRef = ref(db);
+        onValue(starCountRef, (snapshot) => {
+        const data = snapshot.val();
+       const dataList=[] 
+        Object.keys(data).forEach((key) => {
+         const userData = data[key];
+         let a=[key,[userData.latitude,userData.longitude]]
+         dataList.push(a)
+        });
+        console.log(dataList);
+        });
+        
+    }
+
+    setInterval(getData,5000)
+
+</script>
+
+
+
+</body>
+</html>
